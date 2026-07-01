@@ -1,0 +1,138 @@
+version: '3.8'
+
+services:
+  # ========== API GATEWAY ==========
+  api-gateway:
+    build: ./backend/api-gateway
+    container_name: debmart-api-gateway
+    ports:
+      - "5000:5000"
+    depends_on:
+      - auth-service
+      - product-service
+      - cart-service
+      - order-service
+    environment:
+      - JWT_SECRET=${JWT_SECRET}
+      - NODE_ENV=development
+    networks:
+      - debmart-network
+    restart: unless-stopped
+
+  # ========== AUTH SERVICE ==========
+  auth-service:
+    build: ./backend/services/auth-service
+    container_name: debmart-auth
+    ports:
+      - "5001:5001"
+    depends_on:
+      - mongodb
+      - redis
+    environment:
+      - JWT_SECRET=${JWT_SECRET}
+      - MONGO_URI=mongodb://mongodb:27017/auth-service
+      - REDIS_URL=redis://redis:6379
+      - NODE_ENV=development
+    networks:
+      - debmart-network
+    restart: unless-stopped
+
+  # ========== PRODUCT SERVICE ==========
+  product-service:
+    build: ./backend/services/product-service
+    container_name: debmart-products
+    ports:
+      - "5002:5002"
+    depends_on:
+      - mongodb
+      - redis
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017/product-service
+      - REDIS_URL=redis://redis:6379
+      - NODE_ENV=development
+    networks:
+      - debmart-network
+    restart: unless-stopped
+
+  # ========== CART SERVICE ==========
+  cart-service:
+    build: ./backend/services/cart-service
+    container_name: debmart-cart
+    ports:
+      - "5003:5003"
+    depends_on:
+      - mongodb
+      - redis
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017/cart-service
+      - REDIS_URL=redis://redis:6379
+      - NODE_ENV=development
+    networks:
+      - debmart-network
+    restart: unless-stopped
+
+  # ========== ORDER SERVICE ==========
+  order-service:
+    build: ./backend/services/order-service
+    container_name: debmart-orders
+    ports:
+      - "5004:5004"
+    depends_on:
+      - mongodb
+      - redis
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017/order-service
+      - REDIS_URL=redis://redis:6379
+      - NODE_ENV=development
+    networks:
+      - debmart-network
+    restart: unless-stopped
+
+  # ========== MONGODB ==========
+  mongodb:
+    image: mongo:latest
+    container_name: debmart-mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=password123
+    networks:
+      - debmart-network
+    restart: unless-stopped
+
+  # ========== REDIS ==========
+  redis:
+    image: redis:alpine
+    container_name: debmart-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - debmart-network
+    restart: unless-stopped
+
+  # ========== FRONTEND ==========
+  frontend:
+    build: ./frontend
+    container_name: debmart-frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      - api-gateway
+    networks:
+      - debmart-network
+    restart: unless-stopped
+
+# ========== NETWORKS ==========
+networks:
+  debmart-network:
+    driver: bridge
+
+# ========== VOLUMES ==========
+volumes:
+  mongo_data:
+  redis_data:

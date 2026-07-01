@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DEBMart — Premium E-Commerce</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- ========== HEADER ========== -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <h1> DEBMart</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#" class="active">Home</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#categories">Categories</a></li>
+                <li><a href="#cart">Cart</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button id="loginBtn" class="btn-login">Login</button>
+                <button id="registerBtn" class="btn-register">Register</button>
+                <button id="cartBtn" class="btn-cart"> <span id="cartCount">0</span></button>
+            </div
+        </nav>
+    </header>
+
+    <!-- ========== HERO ========== -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Welcome to <span class="highlight">DEBMart</span></h1>
+            <p>Discover premium products at the best prices. Shop smart, shop fast, shop with confidence.</p>
+            <button class="btn-primary" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">
+                Explore Products →
+            </button>
+        </div>
+        <div class="hero-image">
+            <img src="https://via.placeholder.com/600x400/2563EB/FFFFFF?text=DEBMart" alt="Shopping">
+        </div>
+    </section>
+
+    <!-- ========== CATEGORIES ========== -->
+    <section id="categories" class="categories">
+        <h2>Featured Categories</h2>
+        <div class="category-grid">
+            <div class="category-card" data-category="Electronics"> Electronics</div>
+            <div class="category-card" data-category="Fashion"> Fashion</div>
+            <div class="category-card" data-category="Accessories"> Accessories</div>
+            <div class="category-card" data-category="Books"> Books</div>
+            <div class="category-card" data-category="Sports"> Sports</div>
+            <div class="category-card" data-category="Gaming"> Gaming</div>
+        </div>
+    </section>
+
+    <!-- ========== PRODUCTS ========== -->
+    <section id="products" class="products">
+        <h2>Featured Products</h2>
+        <div id="productContainer" class="product-grid">
+            <!-- Products will be loaded via JavaScript -->
+        </div>
+    </section>
+
+    <!-- ========== CART ========== -->
+    <section id="cart" class="cart-section">
+        <h2> Your Cart</h2>
+        <div id="cartContainer" class="cart-container">
+            <!-- Cart items will be loaded via JavaScript -->
+        </div>
+    </section>
+
+    <!-- ========== FOOTER ========== -->
+    <footer>
+        <div class="footer-content">
+            <h3>DEBMart</h3>
+            <p>Your trusted online shopping destination.</p>
+            <p>© 2026 DEBMart. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
